@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/python2.7
 #
 #	synctool_pkg.py		WJ111
 #
