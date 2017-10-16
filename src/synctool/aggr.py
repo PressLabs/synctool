@@ -31,7 +31,7 @@ def aggregate(f):
         arr = line.split(':', 1)
 
         if len(arr) <= 1:
-            print line
+            print(line)
             continue
 
         node = arr[0]
@@ -61,9 +61,9 @@ def aggregate(f):
                 del output_per_node[node2]
                 nodes.remove(node2)
 
-        print synctool.range.compress(nodelist) + ':'
+        print(synctool.range.compress(nodelist) + ':')
         for line in out:
-            print line
+            print(line)
 
 
 def run(cmd_arr):

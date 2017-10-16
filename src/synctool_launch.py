@@ -44,7 +44,7 @@ if __name__ == '__main__':
     prognam = os.path.basename(sys.argv[0])
 
     if prognam == 'synctool_launch.py':
-        print 'This program is used as a launcher for synctool'
+        print('This program is used as a launcher for synctool')
         sys.exit(0)
 
     if prognam not in LAUNCH:

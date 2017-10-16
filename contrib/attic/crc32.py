@@ -32,7 +32,7 @@ if __name__ == '__main__':
 	import sys
 
 	for file in sys.argv[1:]:
-		print '%s %s' % (crc32(file), file)
+		print('%s %s' % (crc32(file), file))
 
 # EOB
 

@@ -64,7 +64,7 @@ def read_csm_config():
 					if node == '+EmptyGroup':			# ignore +EmptyGroup host
 						continue
 
-					print 'CSM group %s lists unknown node %s' % (group, node)
+					print('CSM group %s lists unknown node %s' % (group, node))
 					continue
 
 				csm['host'][node].append(group)
@@ -96,12 +96,12 @@ def check_csmcompat(csm):
 		ifaces[host] = node
 
 		if not csm['host'].has_key(host) and not node in synctool_config.IGNORE_GROUPS:
-			print 'synctool node %s is not defined in CSM' % host
+			print('synctool node %s is not defined in CSM' % host)
 			warn = warn + 1
 
 	for host in csm['host'].keys():
 		if not ifaces.has_key(host):
-			print 'CSM host %s is not defined in synctool' % host
+			print('CSM host %s is not defined in synctool' % host)
 			warn = warn + 1
 
 # check groups
@@ -128,30 +128,30 @@ def check_csmcompat(csm):
 				continue
 
 			if not group in csm_groups:
- 				print 'CSM host %s is not a member of group %s' % (host, group)
+ 				print('CSM host %s is not a member of group %s' % (host, group))
 				warn = warn + 1
 
 		for group in csm_groups:
 			if not group in synctool_groups:
-				print 'synctool node %s is not a member of group %s' % (node, group)
+				print('synctool node %s is not a member of group %s' % (node, group))
 				warn = warn + 1
 
 	for group in csm['emptygroups']:
 		if not group in synctool_config.IGNORE_GROUPS:
-			print 'CSM defines empty group %s' % group
+			print('CSM defines empty group %s' % group)
 			warn = warn + 1
 
 	if not warn:
-		print 'synctool and CSM configs are in sync'
+		print('synctool and CSM configs are in sync')
 
 
 def usage():
-	print 'usage: %s [options]' % os.path.basename(sys.argv[0])
-	print 'options:'
-	print '  -h, --help            Display this information'
-	print '  -c, --conf=dir/file   Use this config file (default: %s)' % synctool_config.DEFAULT_CONF
-	print
-	print '%s checks consistency between the CSM and synctool configs' % os.path.basename(sys.argv[0])
+	print('usage: %s [options]' % os.path.basename(sys.argv[0]))
+	print('options:')
+	print('  -h, --help            Display this information')
+	print('  -c, --conf=dir/file   Use this config file (default: %s)' % synctool_config.DEFAULT_CONF)
+	print()
+	print('%s checks consistency between the CSM and synctool configs' % os.path.basename(sys.argv[0]))
 
 
 def get_options():
@@ -162,13 +162,13 @@ def get_options():
 
 	try:
 		opts, args = getopt.getopt(sys.argv[1:], "hc:", ['help', 'conf='])
-	except getopt.error, (reason):
-		print '%s: %s' % (progname, reason)
+	except getopt.error as (reason):
+		print('%s: %s' % (progname, reason))
 		usage()
 		sys.exit(1)
 
-	except getopt.GetoptError, (reason):
-		print '%s: %s' % (progname, reason)
+	except getopt.GetoptError as (reason):
+		print('%s: %s' % (progname, reason))
 		usage()
 		sys.exit(1)
 

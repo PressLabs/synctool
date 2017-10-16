@@ -143,7 +143,7 @@ KNOWN_PACKAGE_MANAGERS = ('apt-get', 'yum', 'zypper', 'brew', 'pacman',
                           # 'urpmi', 'portage', 'port', 'swaret',
                           'bsdpkg')
 
-ORIG_UMASK = 022
+ORIG_UMASK = 0o22
 
 
 def init():
@@ -189,7 +189,7 @@ def init():
         os.environ['PATH'] = os.pathsep.join(path_arr)
 
     # save original umask (and restore it)
-    ORIG_UMASK = os.umask(077)
+    ORIG_UMASK = os.umask(0o77)
     os.umask(ORIG_UMASK)
 
 

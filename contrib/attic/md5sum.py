@@ -50,7 +50,7 @@ if __name__ == '__main__':
 	import sys
 
 	for file in sys.argv[1:]:
-		print '%s %s' % (md5sum(file), file)
+		print('%s %s' % (md5sum(file), file))
 
 # EOB
 

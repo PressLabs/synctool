@@ -128,7 +128,7 @@ class SyncStat(object):
     def is_exec(self):
         '''Returns True if its mode has any 'x' bit set'''
 
-        return self.entry_exists and ((self.mode & 0111) != 0)
+        return self.entry_exists and ((self.mode & 0o111) != 0)
 
     def ascii_uid(self):
         '''Returns the username for this uid'''

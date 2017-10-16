@@ -42,7 +42,7 @@ def print_stat(filename, top=True):
     try:
         statbuf = statfunc(filename)
     except OSError as err:
-        print 'error: %s: %s' % (filename, err.strerror)
+        print('error: %s: %s' % (filename, err.strerror))
         return
 
     owner = uid_username(statbuf.st_uid)
@@ -57,19 +57,19 @@ def print_stat(filename, top=True):
         try:
             linkdest = os.readlink(filename)
         except OSError as err:
-            print 'error: %s: %s' % (filename, err.strerror)
+            print('error: %s: %s' % (filename, err.strerror))
             return
 
         quoted_linkdest = urllib.quote(linkdest)
 
         # Be wary that a symlink has more fields
-        print ('%06o %u %s %u %s %u %s -> %s' %
-               (statbuf.st_mode, statbuf.st_uid, owner, statbuf.st_gid, group,
-                statbuf.st_size, quoted_filename, quoted_linkdest))
+        print('%06o %u %s %u %s %u %s -> %s' %
+              (statbuf.st_mode, statbuf.st_uid, owner, statbuf.st_gid, group,
+               statbuf.st_size, quoted_filename, quoted_linkdest))
     else:
-        print ('%06o %u %s %u %s %u %s' %
-               (statbuf.st_mode, statbuf.st_uid, owner, statbuf.st_gid, group,
-                statbuf.st_size, quoted_filename))
+        print('%06o %u %s %u %s %u %s' %
+              (statbuf.st_mode, statbuf.st_uid, owner, statbuf.st_gid, group,
+               statbuf.st_size, quoted_filename))
 
     path, filename = os.path.split(filename)
     if not path:
@@ -123,7 +123,7 @@ def gid_groupname(gid):
 
 if __name__ == '__main__':
     if len(sys.argv) <= 1:
-        print 'usage: %s <filename>' % os.path.basename(sys.argv[0])
+        print('usage: %s <filename>' % os.path.basename(sys.argv[0]))
         sys.exit(1)
 
     fullpath = sys.argv[1]

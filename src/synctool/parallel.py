@@ -109,7 +109,7 @@ if __name__ == '__main__':
         def hello(item):
             '''print item'''
 
-            print '[%u]: hello' % os.getpid(), item
+            print('[%u]: hello' % os.getpid(), item)
             time.sleep(0.1245)
 
         synctool.param.NUM_PROC = 3

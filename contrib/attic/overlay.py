@@ -37,7 +37,7 @@ def verbose(str):
 	global VERBOSE
 
 	if VERBOSE:
-		print str
+		print(str)
 
 
 def unix_out(str):
@@ -46,18 +46,18 @@ def unix_out(str):
 	global UNIX_CMD
 
 	if UNIX_CMD:
-		print str
+		print(str)
 
 
 def stdout(str):
 	global UNIX_CMD
 
 	if not UNIX_CMD:
-		print str
+		print(str)
 
 
 def stderr(str):
-	print str
+	print(str)
 
 
 def ascii_uid(uid):
@@ -110,7 +110,7 @@ def stat_path(path):
 
 	try:
 		stat_struct = os.lstat(path)
-	except OSError, (err, reason):
+	except OSError as (err, reason):
 		if err != errno.ENOENT:
 			stderr("lstat('%s') failed: %s" % (path, reason))
 			return 0
@@ -132,12 +132,12 @@ def make_dir(path):
 	unix_out('umask 077')
 	unix_out('mkdir %s' % path)
 
-	old_umask = os.umask(077)
+	old_umask = os.umask(0o77)
 
 	verbose('  os.mkdir(%s)' % path)
 	try:
 		os.mkdir(path)
-	except OSError, reason:
+	except OSError as reason:
 		stderr('failed to make directory %s : %s' % (path, reason))
 
 	os.umask(old_umask)
@@ -149,13 +149,13 @@ def hard_link(src, dest):
 	verbose('  os.link(%s, %s)' % (src, dest))
 	try:
 		os.link(src, dest)
-	except OSError, reason:
+	except OSError as reason:
 		stderr('failed to hard link %s to %s : %s' % (src, dest, reason))
 
 
 def replicate_path(path, base_path, dest_path):
 	stats = stat_path(os.path.join(base_path, path))
-	mode = stats[stat.ST_MODE] & 07777
+	mode = stats[stat.ST_MODE] & 0o7777
 
 	dest_dir = os.path.join(dest_path, path)
 	make_dir(dest_dir)
@@ -182,12 +182,12 @@ def treewalk_unlink(args, dir, files):
 
 		try:
 			os.unlink(os.path.join(dir, file))
-		except OSError, reason:
+		except OSError as reason:
 			stderr('failed to delete tmp link %s : %s' % (os.path.join(dir, file), reason))
 
 	try:
 		os.rmdir('%s' % dir)
-	except OSError, reason:
+	except OSError as reason:
 		stderr('failed to delete tmp dir %s : %s' % (dir, reason))
 
 
@@ -206,7 +206,7 @@ def run_command(cmd):
 	verbose('  os.system("%s")' % cmd)
 	try:
 		os.system(cmd)
-	except OSError, reason:
+	except OSError as reason:
 		stderr("failed to run shell command '%s' : %s" % (cmd1, reason))
 
 
@@ -313,7 +313,7 @@ def read_config(filename):
 
 	try:
 		cwd = os.getcwd()
-	except OSError, reason:
+	except OSError as reason:
 		cwd = '.'
 
 	filename = os.path.join(cwd, filename)
@@ -322,7 +322,7 @@ def read_config(filename):
 
 	try:
 		f = open(filename, 'r')
-	except IOError, reason:
+	except IOError as reason:
 		stderr("failed to read config file '%s' : %s" % (filename, reason))
 		sys.exit(-1)
 
@@ -417,21 +417,21 @@ def read_config(filename):
 def usage():
 	global DEFAULT_CONF
 
-	print 'usage: %s [options] [<arguments>]' % os.path.basename(sys.argv[0])
-	print 'options:'
-	print '  -h, --help            Display this information'
-	print '  -c, --conf=dir/file   Use this config file (default: %s)' % DEFAULT_CONF
-#	print '  -n, --dry-run         Show what would have been updated'
-	print '  -f, --fix             Perform updates (otherwise, do dry-run)'
-	print '  -v, --verbose         Be verbose'
-	print '  -q, --quiet           Suppress informational startup messages'
-	print '  -x, --unix            Output actions as unix shell commands'
-	print '  -o, --rsync-opts      Pass extra options to rsync'
-	print
-	print 'overlay can help you administer your cluster of machines'
-	print 'Note that by default, it does a dry-run, unless you specify --fix'
-	print
-	print 'Written by Walter de Jong <walter@sara.nl> (c) 2006'
+	print('usage: %s [options] [<arguments>]' % os.path.basename(sys.argv[0]))
+	print('options:')
+	print('  -h, --help            Display this information')
+	print('  -c, --conf=dir/file   Use this config file (default: %s)' % DEFAULT_CONF)
+#	print('  -n, --dry-run         Show what would have been updated')
+	print('  -f, --fix             Perform updates (otherwise, do dry-run)')
+	print('  -v, --verbose         Be verbose')
+	print('  -q, --quiet           Suppress informational startup messages')
+	print('  -x, --unix            Output actions as unix shell commands')
+	print('  -o, --rsync-opts      Pass extra options to rsync')
+	print()
+	print('overlay can help you administer your cluster of machines')
+	print('Note that by default, it does a dry-run, unless you specify --fix')
+	print()
+	print('Written by Walter de Jong <walter@sara.nl> (c) 2006')
 
 
 def main():
@@ -442,13 +442,13 @@ def main():
 	if len(sys.argv) > 1:
 		try:
 			opts, args = getopt.getopt(sys.argv[1:], "hc:fvqxo:", ['help', 'conf=', 'fix', 'verbose', 'quiet', 'unix', 'rsync-opts='])
-		except getopt.error, (reason):
-			print '%s: %s' % (progname, reason)
+		except getopt.error as (reason):
+			print('%s: %s' % (progname, reason))
 			usage()
 			sys.exit(1)
 
-		except getopt.GetoptError, (reason):
-			print '%s: %s' % (progname, reason)
+		except getopt.GetoptError as (reason):
+			print('%s: %s' % (progname, reason))
 			usage()
 			sys.exit(1)
 
@@ -574,12 +574,12 @@ def main():
 
 
 if __name__ == '__main__':
-	print 'WdJ: overlay is no longer functionally compatible with synctool.'
-	print '     The main reason for this is that synctool now works with'
-	print '     underscored group extensions, and supports group extensions'
-	print '     on directories.'
-	print
-	print "(maybe I'll fix this later, but I don't think so ... use synctool instead)"
+	print('WdJ: overlay is no longer functionally compatible with synctool.')
+	print('     The main reason for this is that synctool now works with')
+	print('     underscored group extensions, and supports group extensions')
+	print('     on directories.')
+	print()
+	print("(maybe I'll fix this later, but I don't think so ... use synctool instead)")
 
 	sys.exit(1)
 

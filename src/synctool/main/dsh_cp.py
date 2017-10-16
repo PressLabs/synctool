@@ -145,12 +145,12 @@ def check_cmd_config():
 def usage():
     '''print usage information'''
 
-    print 'usage: %s [options] FILE [..] DESTDIR|:' % PROGNAME
-    print '''options:
+    print('usage: %s [options] FILE [..] DESTDIR|:' % PROGNAME)
+    print('''options:
   -h, --help                  Display this information
   -c, --conf=FILE             Use this config file
-                              (default: %s)''' % param.DEFAULT_CONF
-    print '''  -n, --node=LIST             Execute only on these nodes
+                              (default: %s)''' % param.DEFAULT_CONF)
+    print('''  -n, --node=LIST             Execute only on these nodes
   -g, --group=LIST            Execute only on these groups of nodes
   -x, --exclude=LIST          Exclude these nodes from the selected group
   -X, --exclude-group=LIST    Exclude these groups from the selection
@@ -165,7 +165,7 @@ def usage():
   -f, --fix                   Perform copy (otherwise, do dry-run)
 
 DESTDIR may be ':' (colon) meaning the directory of the first source file
-'''
+''')
 
 
 def get_options():
@@ -188,7 +188,7 @@ def get_options():
                                     'zzz=', 'unix', 'verbose', 'quiet',
                                     'aggregate', 'fix'])
     except getopt.GetoptError as reason:
-        print '%s: %s' % (PROGNAME, reason)
+        print('%s: %s' % (PROGNAME, reason))
 #        usage()
         sys.exit(1)
 
@@ -265,12 +265,12 @@ def get_options():
             try:
                 param.NUM_PROC = int(arg)
             except ValueError:
-                print ("%s: option '%s' requires a numeric value" %
-                       (PROGNAME, opt))
+                print(("%s: option '%s' requires a numeric value" %
+                       (PROGNAME, opt)))
                 sys.exit(1)
 
             if param.NUM_PROC < 1:
-                print '%s: invalid value for numproc' % PROGNAME
+                print('%s: invalid value for numproc' % PROGNAME)
                 sys.exit(1)
 
             continue
@@ -279,12 +279,12 @@ def get_options():
             try:
                 param.SLEEP_TIME = int(arg)
             except ValueError:
-                print ("%s: option '%s' requires a numeric value" %
-                       (PROGNAME, opt))
+                print(("%s: option '%s' requires a numeric value" %
+                       (PROGNAME, opt)))
                 sys.exit(1)
 
             if param.SLEEP_TIME < 0:
-                print '%s: invalid value for sleep time' % PROGNAME
+                print('%s: invalid value for sleep time' % PROGNAME)
                 sys.exit(1)
 
             if not param.SLEEP_TIME:
@@ -316,11 +316,11 @@ def get_options():
             continue
 
     if not args:
-        print '%s: missing file to copy' % PROGNAME
+        print('%s: missing file to copy' % PROGNAME)
         sys.exit(1)
 
     if len(args) < 2:
-        print '%s: missing destination' % PROGNAME
+        print('%s: missing destination' % PROGNAME)
         sys.exit(1)
 
     MASTER_OPTS.extend(args)
@@ -337,7 +337,7 @@ def get_options():
     # DESTDIR[0] == ':' would create "rsync to node::module"
     # which is something we don't want
     if not DESTDIR or DESTDIR[0] == ':':
-        print '%s: invalid destination' % PROGNAME
+        print('%s: invalid destination' % PROGNAME)
         sys.exit(1)
 
     # ensure trailing slash

@@ -267,7 +267,7 @@ def _makedir(path, remote_stats):
 
     # temporarily restore admin's umask
     mask = os.umask(synctool.param.ORIG_UMASK)
-    mode = remote_stats[0].mode & 0777
+    mode = remote_stats[0].mode & 0o777
     try:
         os.mkdir(path, mode)
     except OSError as err:
